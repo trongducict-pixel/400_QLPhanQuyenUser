@@ -1,0 +1,6 @@
+{
+  "name": "Quản lý Đề nghị Cấp quyền Chương trình - VietinBank Ninh Bình",
+  "description": "Hệ thống quản lý quy trình lập, phê duyệt, xử lý và tổng hợp đề nghị cấp quyền truy cập các chương trình ứng dụng nội bộ VietinBank Chi nhánh Ninh Bình.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
