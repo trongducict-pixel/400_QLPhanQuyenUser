@@ -82,13 +82,18 @@ export const CreateRequestModal: React.FC<CreateRequestModalProps> = ({
       <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[95vh] overflow-y-auto border border-gray-200">
         {/* Header */}
         <div className="p-4 sm:p-5 bg-gradient-to-r from-[#004F9E] to-[#003B77] text-white flex items-center justify-between rounded-t-2xl">
-          <div className="flex items-center space-x-2.5">
-            <div className="p-2 bg-white/10 rounded-xl">
-              <FilePlus className="w-5 h-5 text-white" />
+          <div className="flex items-center space-x-3">
+            <div className="h-9 px-2 bg-white rounded-xl shadow flex items-center justify-center">
+              <img
+                src="https://raw.githubusercontent.com/giadinhbanker/anh-super-app-bac-phu-tho/main/Logo%20VietinBank.png"
+                alt="VietinBank"
+                className="h-6 w-auto object-contain"
+                referrerPolicy="no-referrer"
+              />
             </div>
             <div>
-              <h3 className="text-base sm:text-lg font-bold">Lập Đề nghị Cấp quyền Chương trình</h3>
-              <p className="text-xs text-blue-200">VietinBank – Chi nhánh Ninh Bình</p>
+              <h3 className="text-sm sm:text-base font-bold">Lập Đề nghị Cấp quyền Chương trình</h3>
+              <p className="text-[11px] text-blue-200">Chi nhánh Ninh Bình</p>
             </div>
           </div>
           <button

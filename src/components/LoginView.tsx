@@ -70,11 +70,14 @@ export const LoginView: React.FC<LoginViewProps> = ({
       {/* Top Header Bar */}
       <header className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between border-b border-white/10">
         <div className="flex items-center space-x-3">
-          {/* VietinBank Red-Blue Badge Icon */}
-          <div className="w-10 h-10 rounded-xl bg-white p-1.5 shadow-md flex items-center justify-center">
-            <div className="w-full h-full rounded-lg bg-[#004F9E] flex items-center justify-center text-white font-black text-xs tracking-tighter">
-              <span className="text-[#ED1C24]">V</span>TB
-            </div>
+          {/* VietinBank Official Brand Logo */}
+          <div className="h-10 px-2.5 py-1 bg-white rounded-xl shadow-md flex items-center justify-center">
+            <img
+              src="https://raw.githubusercontent.com/giadinhbanker/anh-super-app-bac-phu-tho/main/Logo%20VietinBank.png"
+              alt="VietinBank"
+              className="h-7 w-auto object-contain"
+              referrerPolicy="no-referrer"
+            />
           </div>
           <div>
             <div className="text-xs font-black tracking-wider text-white uppercase">
@@ -105,10 +108,17 @@ export const LoginView: React.FC<LoginViewProps> = ({
       <main className="relative z-10 w-full max-w-md mx-auto px-4 py-8 flex-1 flex flex-col items-center justify-center">
         <div className="w-full bg-white rounded-3xl shadow-2xl p-7 sm:p-9 text-slate-900 border border-slate-100 relative">
           
-          {/* Card Header */}
+          {/* Card Header with Official VietinBank Logo */}
           <div className="text-center pb-5 border-b border-slate-100">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#004F9E] to-blue-700 mx-auto flex items-center justify-center text-white shadow-lg shadow-blue-900/20 mb-3">
-              <Key className="w-7 h-7" />
+            <div className="w-full flex justify-center mb-3">
+              <div className="p-2.5 bg-slate-50 border border-slate-100 rounded-2xl shadow-xs inline-flex items-center justify-center">
+                <img
+                  src="https://raw.githubusercontent.com/giadinhbanker/anh-super-app-bac-phu-tho/main/Logo%20VietinBank.png"
+                  alt="VietinBank"
+                  className="h-10 w-auto object-contain"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
             </div>
             <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
               Đăng Nhập Hệ Thống

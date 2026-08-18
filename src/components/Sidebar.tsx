@@ -206,18 +206,21 @@ export const Sidebar: React.FC<SidebarProps> = ({
   return (
     <aside className="w-64 bg-[#0054A3] flex flex-col flex-shrink-0 shadow-xl border-r border-[#004280]">
       {/* VietinBank Brand Header */}
-      <div className="p-5 border-b border-white/15">
-        <div className="flex items-center space-x-2.5">
-          <div className="w-8 h-8 rounded bg-white text-[#0054A3] font-black text-sm flex items-center justify-center shadow">
-            VTB
+      <div className="p-4 border-b border-white/15">
+        <div className="bg-white rounded-xl p-2 shadow flex items-center justify-center">
+          <img
+            src="https://raw.githubusercontent.com/giadinhbanker/anh-super-app-bac-phu-tho/main/Logo%20VietinBank.png"
+            alt="VietinBank"
+            className="h-8 w-auto object-contain"
+            referrerPolicy="no-referrer"
+          />
+        </div>
+        <div className="text-center mt-2">
+          <div className="text-blue-100 text-[11px] font-bold tracking-wider uppercase">
+            Chi nhánh Ninh Bình
           </div>
-          <div>
-            <div className="text-white font-extrabold text-base leading-tight uppercase tracking-wider">
-              VietinBank
-            </div>
-            <div className="text-blue-200 text-[10px] font-semibold uppercase tracking-widest mt-0.5">
-              CN Ninh Bình • V1.0
-            </div>
+          <div className="text-blue-200/80 text-[10px] font-medium">
+            Quản lý Cấp quyền Ứng dụng
           </div>
         </div>
       </div>

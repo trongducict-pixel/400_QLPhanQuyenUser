@@ -53,8 +53,14 @@ export const PrintTicketModal: React.FC<PrintTicketModalProps> = ({
         <div className="p-8 sm:p-12 text-black bg-white font-serif leading-relaxed text-sm print:p-6 print:text-[12pt] print:leading-normal">
           {/* Header 2 columns */}
           <div className="grid grid-cols-2 gap-4 pb-4 border-b border-gray-400">
-            {/* Left: Bank Unit */}
-            <div className="text-center">
+            {/* Left: Bank Unit & Logo */}
+            <div className="text-center flex flex-col items-center">
+              <img
+                src="https://raw.githubusercontent.com/giadinhbanker/anh-super-app-bac-phu-tho/main/Logo%20VietinBank.png"
+                alt="VietinBank Logo"
+                className="h-8 w-auto object-contain mb-1"
+                referrerPolicy="no-referrer"
+              />
               <div className="font-bold uppercase tracking-tight text-xs sm:text-sm">
                 NGÂN HÀNG TMCP CÔNG THƯƠNG VIỆT NAM
               </div>

@@ -58,14 +58,23 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 sticky top-0 z-30 shadow-xs">
-      {/* Title */}
+    <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-30 shadow-xs">
+      {/* Title & Brand */}
       <div className="flex items-center space-x-3">
-        <h1 className="text-sm sm:text-base font-bold text-slate-800 uppercase tracking-tight">
+        <div className="h-8 px-2 bg-slate-50 border border-slate-200 rounded-lg flex items-center justify-center shrink-0">
+          <img
+            src="https://raw.githubusercontent.com/giadinhbanker/anh-super-app-bac-phu-tho/main/Logo%20VietinBank.png"
+            alt="VietinBank"
+            className="h-5 w-auto object-contain"
+            referrerPolicy="no-referrer"
+          />
+        </div>
+        <div className="h-4 w-[1px] bg-slate-200 hidden sm:block" />
+        <h1 className="text-xs sm:text-sm md:text-base font-bold text-slate-800 uppercase tracking-tight">
           Quản Lý Đề Nghị Cấp Quyền Chương Trình
         </h1>
-        <span className="hidden lg:inline-flex items-center text-[10px] font-bold uppercase tracking-wider text-slate-400 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
-          VietinBank Ninh Bình
+        <span className="hidden lg:inline-flex items-center text-[10px] font-bold uppercase tracking-wider text-[#004F9E] bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+          Chi nhánh Ninh Bình
         </span>
       </div>
 

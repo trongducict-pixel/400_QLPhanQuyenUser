@@ -260,12 +260,20 @@ export default function App() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4">
-        <Loader2 className="w-10 h-10 text-[#004F9E] animate-spin mb-3" />
-        <div className="text-base font-bold text-gray-800">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-[#002855] to-[#004F9E] flex flex-col items-center justify-center p-4 text-white">
+        <div className="bg-white p-4 rounded-2xl shadow-xl mb-4">
+          <img
+            src="https://raw.githubusercontent.com/giadinhbanker/anh-super-app-bac-phu-tho/main/Logo%20VietinBank.png"
+            alt="VietinBank"
+            className="h-10 w-auto object-contain"
+            referrerPolicy="no-referrer"
+          />
+        </div>
+        <Loader2 className="w-8 h-8 text-blue-200 animate-spin mb-3" />
+        <div className="text-base font-bold text-white tracking-wide">
           Hệ thống Quản lý Đề nghị Cấp quyền Chương trình
         </div>
-        <div className="text-xs text-gray-500 mt-1 font-medium">
+        <div className="text-xs text-blue-200 mt-1 font-medium">
           VietinBank – Chi nhánh Ninh Bình • Đang khởi tạo dữ liệu...
         </div>
       </div>
