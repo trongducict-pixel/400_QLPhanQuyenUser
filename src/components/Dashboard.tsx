@@ -121,7 +121,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
               </h1>
               <p className="text-xs text-blue-100 mt-0.5 max-w-2xl leading-relaxed">
                 {role === 'Cán bộ' &&
-                  'Theo dõi và lập đề nghị cấp mới, reset mật khẩu, hủy quyền các chương trình CoreBanking, LOS, FastFund...'}
+                  'Theo dõi và lập đề nghị Cấp mới, Thay đổi, Hủy người dùng các chương trình CoreBanking, LOS, FastFund...'}
                 {role === 'Lãnh đạo phòng' &&
                   `Phê duyệt các đề nghị cấp quyền của cán bộ thuộc ${currentUser.tenPhongBan} (${currentUser.maPhongBan}).`}
                 {role === 'Cán bộ điện toán' &&
@@ -132,15 +132,20 @@ export const Dashboard: React.FC<DashboardProps> = ({
             </div>
 
             <div className="flex flex-wrap gap-2 sm:self-center flex-shrink-0">
-              {(role === 'Cán bộ' || role === 'Admin') && (
-                <button
-                  onClick={onOpenCreate}
-                  className="inline-flex items-center gap-1.5 bg-[#DE1C24] hover:bg-red-700 text-white text-xs font-bold px-3.5 py-2 rounded-lg shadow-sm transition cursor-pointer"
-                >
-                  <FilePlus className="w-3.5 h-3.5" />
-                  <span>Lập Đề Nghị Mới</span>
-                </button>
-              )}
+              <button
+                onClick={onOpenCreate}
+                className="inline-flex items-center gap-1.5 bg-[#DE1C24] hover:bg-red-700 text-white text-xs font-bold px-3.5 py-2 rounded-lg shadow-sm transition cursor-pointer"
+              >
+                <FilePlus className="w-3.5 h-3.5" />
+                <span>Lập Đề Nghị Mới</span>
+              </button>
+              <button
+                onClick={() => onNavigate('requests')}
+                className="inline-flex items-center gap-1.5 bg-white/15 hover:bg-white/25 text-white text-xs font-semibold px-3 py-2 rounded-lg border border-white/20 transition cursor-pointer"
+              >
+                <FileText className="w-3.5 h-3.5" />
+                <span>Quản Lý Đề Nghị</span>
+              </button>
               <button
                 onClick={() => onNavigate('matrix')}
                 className="inline-flex items-center gap-1.5 bg-white/15 hover:bg-white/25 text-white text-xs font-semibold px-3 py-2 rounded-lg border border-white/20 transition cursor-pointer"
@@ -155,47 +160,224 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
       {/* KPI Metric Cards based on Role - High Density 4-column card grid */}
 
-      {/* 1. KPI for Cán bộ */}
+      {/* 1. Dashboard View for Cán bộ (Nổi bật Lập đề nghị mới & Quản lý đề nghị) */}
       {role === 'Cán bộ' && (
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
-          <div className="bg-white p-3.5 rounded-lg border border-slate-200 shadow-xs flex items-center">
-            <div className="bg-blue-100 p-3 rounded-md mr-3.5 text-[#0054A3] text-xl font-bold min-w-[48px] text-center">
-              {myTotal.toString().padStart(2, '0')}
+        <div className="space-y-5">
+          {/* Action Focus Highlights */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Card 1: Lập đề nghị mới (Nổi bật màu VietinBank) */}
+            <div className="bg-gradient-to-br from-white to-blue-50/50 rounded-xl p-5 border-2 border-[#0054A3]/30 shadow-sm flex flex-col justify-between relative overflow-hidden group hover:border-[#0054A3] transition-all">
+              <div className="absolute top-0 right-0 w-28 h-28 bg-[#0054A3]/5 rounded-bl-full pointer-events-none" />
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-10 h-10 rounded-lg bg-[#DE1C24] text-white flex items-center justify-center shadow-md">
+                    <FilePlus className="w-5 h-5" />
+                  </div>
+                  <span className="text-[10px] bg-red-100 text-[#DE1C24] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                    Thao tác nhanh
+                  </span>
+                </div>
+                <h2 className="text-base font-bold text-slate-900 tracking-tight">
+                  Lập Đề Nghị Cấp Quyền Mới
+                </h2>
+                <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                  Đăng ký Cấp mới tài khoản, Thay đổi nhóm quyền hoặc Hủy người dùng truy cập chương trình ứng dụng theo mẫu chuẩn VietinBank.
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                <span className="text-[11px] text-slate-500 font-medium">
+                  Chuẩn hóa theo QĐ phân công
+                </span>
+                <button
+                  onClick={onOpenCreate}
+                  className="inline-flex items-center gap-1.5 bg-[#DE1C24] hover:bg-red-700 text-white text-xs font-bold px-4 py-2 rounded-lg shadow-sm transition cursor-pointer"
+                >
+                  <FilePlus className="w-4 h-4" />
+                  <span>Tạo Đề Nghị Ngay</span>
+                </button>
+              </div>
             </div>
-            <div>
-              <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Đề nghị của tôi</p>
-              <p className="text-base font-bold text-slate-800">Đã lập</p>
+
+            {/* Card 2: Quản lý đề nghị (Theo dõi tiến độ) */}
+            <div className="bg-gradient-to-br from-white to-slate-50 rounded-xl p-5 border-2 border-slate-200 shadow-sm flex flex-col justify-between relative overflow-hidden group hover:border-slate-300 transition-all">
+              <div className="absolute top-0 right-0 w-28 h-28 bg-blue-500/5 rounded-bl-full pointer-events-none" />
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-10 h-10 rounded-lg bg-[#0054A3] text-white flex items-center justify-center shadow-md">
+                    <FileText className="w-5 h-5" />
+                  </div>
+                  <span className="text-[10px] bg-blue-100 text-[#0054A3] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                    Theo dõi hồ sơ
+                  </span>
+                </div>
+                <h2 className="text-base font-bold text-slate-900 tracking-tight">
+                  Quản Lý Đề Nghị Của Bạn
+                </h2>
+                <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                  Theo dõi trạng thái duyệt của Lãnh đạo phòng, tiếp nhận từ Điện toán, in phiếu in A4 và nhận kết quả cấp quyền.
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                <span className="text-[11px] text-slate-500 font-medium">
+                  Tổng số: <strong className="text-slate-800">{myTotal}</strong> đề nghị
+                </span>
+                <button
+                  onClick={() => onNavigate('requests')}
+                  className="inline-flex items-center gap-1.5 bg-[#0054A3] hover:bg-[#004280] text-white text-xs font-bold px-4 py-2 rounded-lg shadow-sm transition cursor-pointer"
+                >
+                  <FileText className="w-4 h-4" />
+                  <span>Quản Lý Chi Tiết</span>
+                </button>
+              </div>
             </div>
           </div>
 
-          <div className="bg-white p-3.5 rounded-lg border border-slate-200 shadow-xs flex items-center">
-            <div className="bg-amber-100 p-3 rounded-md mr-3.5 text-amber-700 text-xl font-bold min-w-[48px] text-center">
-              {myPendingApproval.toString().padStart(2, '0')}
+          {/* Metric Status Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
+            <div className="bg-white p-3.5 rounded-lg border border-slate-200 shadow-xs flex items-center">
+              <div className="bg-blue-100 p-3 rounded-md mr-3.5 text-[#0054A3] text-xl font-bold min-w-[48px] text-center">
+                {myTotal.toString().padStart(2, '0')}
+              </div>
+              <div>
+                <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Đề nghị của tôi</p>
+                <p className="text-base font-bold text-slate-800">Đã lập</p>
+              </div>
             </div>
-            <div>
-              <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Đang chờ</p>
-              <p className="text-base font-bold text-slate-800">Phòng Duyệt</p>
+
+            <div className="bg-white p-3.5 rounded-lg border border-slate-200 shadow-xs flex items-center">
+              <div className="bg-amber-100 p-3 rounded-md mr-3.5 text-amber-700 text-xl font-bold min-w-[48px] text-center">
+                {myPendingApproval.toString().padStart(2, '0')}
+              </div>
+              <div>
+                <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Đang chờ</p>
+                <p className="text-base font-bold text-slate-800">Phòng Duyệt</p>
+              </div>
+            </div>
+
+            <div className="bg-white p-3.5 rounded-lg border border-slate-200 shadow-xs flex items-center">
+              <div className="bg-indigo-100 p-3 rounded-md mr-3.5 text-indigo-700 text-xl font-bold min-w-[48px] text-center">
+                {myPendingProcess.toString().padStart(2, '0')}
+              </div>
+              <div>
+                <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Chờ xử lý</p>
+                <p className="text-base font-bold text-slate-800">Điện toán</p>
+              </div>
+            </div>
+
+            <div className="bg-white p-3.5 rounded-lg border border-slate-200 shadow-xs flex items-center">
+              <div className="bg-emerald-100 p-3 rounded-md mr-3.5 text-emerald-700 text-xl font-bold min-w-[48px] text-center">
+                {myCompleted.toString().padStart(2, '0')}
+              </div>
+              <div>
+                <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Hoàn thành</p>
+                <p className="text-base font-bold text-slate-800">Đã cấp quyền</p>
+              </div>
             </div>
           </div>
 
-          <div className="bg-white p-3.5 rounded-lg border border-slate-200 shadow-xs flex items-center">
-            <div className="bg-indigo-100 p-3 rounded-md mr-3.5 text-indigo-700 text-xl font-bold min-w-[48px] text-center">
-              {myPendingProcess.toString().padStart(2, '0')}
+          {/* Danh sách đề nghị của tôi ngay trên Dashboard */}
+          <div className="bg-white rounded-lg border border-slate-200 shadow-xs p-4">
+            <div className="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
+              <div className="flex items-center space-x-2">
+                <FileText className="w-4 h-4 text-[#0054A3]" />
+                <h3 className="font-bold text-slate-800 text-xs uppercase tracking-wider">
+                  Quản Lý Đề Nghị Của Tôi ({userRequests.length})
+                </h3>
+              </div>
+              <div className="flex items-center gap-2 text-xs font-semibold">
+                <button
+                  onClick={() => onNavigate('requests')}
+                  className="text-[#0054A3] hover:underline cursor-pointer"
+                >
+                  Xem danh sách
+                </button>
+                <span className="text-slate-300">•</span>
+                <button
+                  onClick={() => onNavigate('lookup')}
+                  className="text-[#0054A3] hover:underline cursor-pointer"
+                >
+                  Tra cứu đề nghị toàn chi nhánh &rarr;
+                </button>
+              </div>
             </div>
-            <div>
-              <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Chờ xử lý</p>
-              <p className="text-base font-bold text-slate-800">Điện toán</p>
-            </div>
-          </div>
 
-          <div className="bg-white p-3.5 rounded-lg border border-slate-200 shadow-xs flex items-center">
-            <div className="bg-emerald-100 p-3 rounded-md mr-3.5 text-emerald-700 text-xl font-bold min-w-[48px] text-center">
-              {myCompleted.toString().padStart(2, '0')}
-            </div>
-            <div>
-              <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Hoàn thành</p>
-              <p className="text-base font-bold text-slate-800">Đã cấp quyền</p>
-            </div>
+            {userRequests.length > 0 ? (
+              <div className="divide-y divide-slate-100 text-xs">
+                {userRequests.map((req) => (
+                  <div
+                    key={req.id}
+                    className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                  >
+                    <div>
+                      <div className="flex items-center space-x-2">
+                        <span className="font-mono font-bold text-[#0054A3]">
+                          {req.maDeNghi}
+                        </span>
+                        <span className="text-[10px] bg-blue-100 text-[#0054A3] px-1.5 py-0.5 rounded font-bold">
+                          {req.loaiDeNghi}
+                        </span>
+                        <span
+                          className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                            req.trangThai === 'Hoàn thành'
+                              ? 'bg-emerald-100 text-emerald-800'
+                              : req.trangThai === 'Từ chối'
+                              ? 'bg-rose-100 text-rose-800'
+                              : req.trangThai === 'Chờ xử lý'
+                              ? 'bg-blue-100 text-blue-800'
+                              : 'bg-amber-100 text-amber-800'
+                          }`}
+                        >
+                          {req.trangThai}
+                        </span>
+                      </div>
+                      <div className="text-slate-800 mt-1 font-medium text-xs">
+                        Chương trình: <span className="font-bold text-slate-900">{req.tenChuongTrinh}</span>
+                      </div>
+                      <div className="text-[11px] text-slate-500 mt-0.5">
+                        QĐ: {req.soQDTuyenDung_PhanCong} • Lập lúc {req.ngayTao}
+                        {req.nguoiDuyet && ` • Phê duyệt: ${req.nguoiDuyet}`}
+                        {req.nguoiThucHien && ` • Điện toán: ${req.nguoiThucHien}`}
+                      </div>
+                      {req.lyDoTuChoi && (
+                        <div className="text-[11px] text-rose-600 mt-1 font-medium bg-rose-50 px-2 py-0.5 rounded border border-rose-200 inline-block">
+                          Lý do từ chối: {req.lyDoTuChoi}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="flex items-center space-x-2 flex-shrink-0">
+                      <button
+                        onClick={() => onOpenPrint(req)}
+                        title="In phiếu A4"
+                        className="inline-flex items-center gap-1 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-xs font-semibold px-2.5 py-1.5 rounded transition cursor-pointer"
+                      >
+                        <Printer className="w-3.5 h-3.5 text-slate-600" />
+                        <span>In Phiếu A4</span>
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="py-8 text-center">
+                <div className="w-12 h-12 rounded-full bg-blue-50 text-[#0054A3] flex items-center justify-center mx-auto mb-2">
+                  <FilePlus className="w-6 h-6" />
+                </div>
+                <p className="text-xs font-bold text-slate-800">
+                  Bạn chưa có đề nghị cấp quyền nào
+                </p>
+                <p className="text-[11px] text-slate-500 mt-0.5 max-w-sm mx-auto">
+                  Hãy nhấn nút bên dưới để tạo đề nghị cấp quyền chương trình đầu tiên của bạn.
+                </p>
+                <button
+                  onClick={onOpenCreate}
+                  className="mt-3 inline-flex items-center gap-1.5 bg-[#DE1C24] hover:bg-red-700 text-white text-xs font-bold px-4 py-2 rounded-lg shadow-sm transition cursor-pointer"
+                >
+                  <FilePlus className="w-3.5 h-3.5" />
+                  <span>Lập Đề Nghị Mới Ngay</span>
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}

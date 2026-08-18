@@ -59,18 +59,10 @@ export const LookupView: React.FC<LookupViewProps> = ({
     setToDate('');
   };
 
-  // Base scope
+  // Base scope: All users can search all requests across the branch
   const scopedRequests = useMemo(() => {
-    if (role === 'Cán bộ') {
-      return requests.filter(
-        (r) => r.userAD === currentUser.userAD || r.maUserAD === currentUser.maUserAD
-      );
-    }
-    if (role === 'Lãnh đạo phòng') {
-      return requests.filter((r) => r.maPhongBan === currentUser.maPhongBan);
-    }
-    return requests; // IT and Admin see all
-  }, [requests, currentUser, role]);
+    return requests;
+  }, [requests]);
 
   // Filtered results
   const searchResults = useMemo(() => {
@@ -141,12 +133,7 @@ export const LookupView: React.FC<LookupViewProps> = ({
           <span>Tra cứu Đề nghị & Quyền Truy cập</span>
         </h2>
         <p className="text-xs text-gray-500 mt-1">
-          {role === 'Cán bộ' && 'Tra cứu toàn bộ lịch sử đề nghị cấp quyền của tài khoản cá nhân.'}
-          {role === 'Lãnh đạo phòng' &&
-            `Tra cứu dữ liệu đề nghị và quyền ứng dụng của cán bộ thuộc ${currentUser.tenPhongBan}.`}
-          {role === 'Cán bộ điện toán' &&
-            'Tra cứu toàn bộ đề nghị cấp quyền, ngày hoàn thành và hồ sơ phân quyền trên toàn chi nhánh.'}
-          {role === 'Admin' && 'Tra cứu nâng cao không giới hạn toàn bộ hệ thống.'}
+          Tra cứu toàn bộ lịch sử đề nghị cấp quyền của tất cả cán bộ, phòng ban và chương trình trên toàn chi nhánh Ninh Bình.
         </p>
       </div>
 
@@ -226,7 +213,7 @@ export const LookupView: React.FC<LookupViewProps> = ({
             >
               <option value="ALL">-- Tất cả loại --</option>
               <option value="Cấp mới">Cấp mới</option>
-              <option value="Reset mật khẩu">Reset mật khẩu</option>
+              <option value="Thay đổi">Thay đổi</option>
               <option value="Hủy người dùng">Hủy người dùng</option>
             </select>
           </div>

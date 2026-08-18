@@ -76,19 +76,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
       id: 'create-request',
       label: 'Lập Đề Nghị Mới',
       icon: FilePlus,
-      roles: ['Cán bộ', 'Admin'],
+      roles: ['Cán bộ', 'Lãnh đạo phòng', 'Cán bộ điện toán', 'Admin'],
       section: 'main'
     },
     {
       id: 'requests',
-      label:
-        role === 'Cán bộ'
-          ? 'Đề Nghị Của Tôi'
-          : role === 'Lãnh đạo phòng'
-          ? 'Phê Duyệt Đề Nghị'
-          : role === 'Cán bộ điện toán'
-          ? 'Xử Lý Phân Quyền IT'
-          : 'Quản Lý Đề Nghị',
+      label: 'Quản Lý Đề Nghị',
       icon: FileText,
       badge:
         role === 'Lãnh đạo phòng'
@@ -121,33 +114,33 @@ export const Sidebar: React.FC<SidebarProps> = ({
       roles: ['Cán bộ', 'Lãnh đạo phòng', 'Cán bộ điện toán', 'Admin'],
       section: 'main'
     },
-    // Admin & Tools section
-    {
-      id: 'users',
-      label: 'Quản Lý Tài Khoản User',
-      icon: Users,
-      roles: ['Admin'],
-      section: 'admin'
-    },
+    // Quản trị & Danh mục (Cán bộ điện toán & Admin)
     {
       id: 'staff',
       label: 'Hồ Sơ Cán Bộ',
       icon: UserCheck,
-      roles: ['Admin'],
+      roles: ['Cán bộ điện toán', 'Admin'],
       section: 'admin'
     },
     {
-      id: 'departments',
-      label: 'Danh Mục Phòng Ban',
-      icon: Building,
-      roles: ['Admin'],
+      id: 'users',
+      label: 'Quản Lý Tài Khoản User',
+      icon: Users,
+      roles: ['Cán bộ điện toán', 'Admin'],
       section: 'admin'
     },
     {
       id: 'programs',
       label: 'Danh Mục Chương Trình',
       icon: Layers,
-      roles: ['Admin'],
+      roles: ['Cán bộ điện toán', 'Admin'],
+      section: 'admin'
+    },
+    {
+      id: 'departments',
+      label: 'Danh Mục Phòng Ban',
+      icon: Building,
+      roles: ['Cán bộ điện toán', 'Admin'],
       section: 'admin'
     },
     {
@@ -161,7 +154,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       id: 'gas-guide',
       label: 'Google Sheets / GAS',
       icon: Code2,
-      roles: ['Cán bộ', 'Lãnh đạo phòng', 'Cán bộ điện toán', 'Admin'],
+      roles: ['Cán bộ điện toán', 'Admin'],
       section: 'admin'
     }
   ];
@@ -172,33 +165,51 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const renderItem = (item: NavItem) => {
     const Icon = item.icon;
     const isActive = activeTab === item.id;
+    const isCreate = item.id === 'create-request';
+    const isRequests = item.id === 'requests';
+
     return (
       <button
         key={item.id}
         onClick={() => onSelectTab(item.id)}
         className={`w-full flex items-center justify-between px-4 py-2.5 text-xs font-medium transition-all duration-150 cursor-pointer ${
           isActive
-            ? 'text-white bg-[#ffffff18] border-l-4 border-[#DE1C24] font-semibold'
+            ? 'text-white bg-[#ffffff20] border-l-4 border-[#DE1C24] font-bold shadow-inner'
+            : isCreate
+            ? 'text-amber-200 bg-white/10 hover:bg-white/20 hover:text-white border-l-4 border-amber-400 font-semibold'
+            : isRequests
+            ? 'text-white bg-white/5 hover:bg-white/15 hover:text-white border-l-4 border-transparent font-medium'
             : 'text-white/75 hover:bg-[#ffffff10] hover:text-white border-l-4 border-transparent'
         }`}
       >
         <div className="flex items-center space-x-3 truncate">
           <Icon
             className={`w-4 h-4 flex-shrink-0 ${
-              isActive ? 'text-white' : 'text-white/70'
+              isActive
+                ? 'text-white'
+                : isCreate
+                ? 'text-amber-300'
+                : 'text-white/80'
             }`}
           />
           <span className="truncate">{item.label}</span>
         </div>
-        {item.badge !== undefined && item.badge > 0 && (
-          <span
-            className={`ml-2 text-[10px] font-bold px-1.5 py-0.5 rounded-full text-white ${
-              item.badgeColor || 'bg-red-500'
-            }`}
-          >
-            {item.badge}
-          </span>
-        )}
+        <div className="flex items-center space-x-1.5 flex-shrink-0">
+          {isCreate && !isActive && (
+            <span className="text-[9px] bg-[#DE1C24] text-white font-bold px-1.5 py-0.5 rounded shadow-xs">
+              + MỚI
+            </span>
+          )}
+          {item.badge !== undefined && item.badge > 0 && (
+            <span
+              className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full text-white ${
+                item.badgeColor || 'bg-red-500'
+              }`}
+            >
+              {item.badge}
+            </span>
+          )}
+        </div>
       </button>
     );
   };

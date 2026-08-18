@@ -362,7 +362,7 @@ export default function App() {
                   Lập Đề nghị Cấp quyền Chương trình
                 </h2>
                 <p className="text-xs text-gray-500">
-                  Điền các thông tin đề nghị cấp mới, reset mật khẩu hoặc hủy quyền truy cập theo mẫu quy định của VietinBank.
+                  Điền các thông tin đề nghị Cấp mới, Thay đổi hoặc Hủy người dùng quyền truy cập theo mẫu quy định của VietinBank.
                 </p>
               </div>
               <CreateRequestModal
@@ -378,16 +378,7 @@ export default function App() {
 
           {activeTab === 'requests' && currentUser && (
             <RequestList
-              requests={
-                currentUser.chucVu === 'Cán bộ'
-                  ? requests.filter(
-                      (r) =>
-                        r.userAD === currentUser.userAD || r.maUserAD === currentUser.maUserAD
-                    )
-                  : currentUser.chucVu === 'Lãnh đạo phòng'
-                  ? requests.filter((r) => r.maPhongBan === currentUser.maPhongBan)
-                  : requests
-              }
+              requests={requests}
               currentUser={currentUser}
               departments={departments}
               programs={programs}
@@ -425,16 +416,7 @@ export default function App() {
             />
           )}
 
-          {activeTab === 'users' && currentUser?.chucVu === 'Admin' && (
-            <AdminUsersView
-              users={users}
-              departments={departments}
-              onAddUser={handleAddUser}
-              onUpdateUser={handleUpdateUser}
-            />
-          )}
-
-          {activeTab === 'staff' && currentUser?.chucVu === 'Admin' && (
+          {activeTab === 'staff' && (currentUser?.chucVu === 'Admin' || currentUser?.chucVu === 'Cán bộ điện toán') && (
             <AdminStaffView
               staffList={staffList}
               departments={departments}
@@ -443,15 +425,16 @@ export default function App() {
             />
           )}
 
-          {activeTab === 'departments' && currentUser?.chucVu === 'Admin' && (
-            <AdminDepartmentsView
+          {activeTab === 'users' && (currentUser?.chucVu === 'Admin' || currentUser?.chucVu === 'Cán bộ điện toán') && (
+            <AdminUsersView
+              users={users}
               departments={departments}
-              onAddDepartment={handleAddDept}
-              onUpdateDepartment={handleUpdateDept}
+              onAddUser={handleAddUser}
+              onUpdateUser={handleUpdateUser}
             />
           )}
 
-          {activeTab === 'programs' && currentUser?.chucVu === 'Admin' && (
+          {activeTab === 'programs' && (currentUser?.chucVu === 'Admin' || currentUser?.chucVu === 'Cán bộ điện toán') && (
             <AdminProgramsView
               programs={programs}
               onAddProgram={handleAddProgram}
@@ -460,11 +443,21 @@ export default function App() {
             />
           )}
 
+          {activeTab === 'departments' && (currentUser?.chucVu === 'Admin' || currentUser?.chucVu === 'Cán bộ điện toán') && (
+            <AdminDepartmentsView
+              departments={departments}
+              onAddDepartment={handleAddDept}
+              onUpdateDepartment={handleUpdateDept}
+            />
+          )}
+
           {activeTab === 'audit' && (currentUser?.chucVu === 'Admin' || currentUser?.chucVu === 'Cán bộ điện toán') && (
             <AdminAuditLogView logs={auditLogs} />
           )}
 
-          {activeTab === 'gas-guide' && <GASGuideView />}
+          {activeTab === 'gas-guide' && (currentUser?.chucVu === 'Admin' || currentUser?.chucVu === 'Cán bộ điện toán') && (
+            <GASGuideView />
+          )}
         </main>
       </div>
 

@@ -4,7 +4,7 @@ export type UserStatus = 'Hoạt động' | 'Khóa';
 export type DepartmentStatus = 'Hoạt động' | 'Ngừng sử dụng';
 export type ProgramStatus = 'Hoạt động' | 'Ngừng sử dụng';
 
-export type RequestType = 'Cấp mới' | 'Reset mật khẩu' | 'Hủy người dùng';
+export type RequestType = 'Cấp mới' | 'Thay đổi' | 'Hủy người dùng';
 
 export type RequestStatus =
   | 'Đề nghị mới'

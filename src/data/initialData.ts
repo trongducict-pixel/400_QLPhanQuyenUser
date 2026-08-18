@@ -71,7 +71,7 @@ export const initialDepartments: PhongBan[] = [
   {
     id: 'dept-it',
     maPhongBan: 'P_IT',
-    tenPhongBan: 'Tổ Điện toán & Công nghệ thông tin',
+    tenPhongBan: 'Điện toán & Công nghệ thông tin',
     trangThai: 'Hoạt động',
     moTa: 'Vận hành hệ thống mạng, hạ tầng, phân quyền ứng dụng'
   },
@@ -374,7 +374,9 @@ const mapDepartmentCode = (tenPB: string): string => {
     case 'Phòng Hỗ trợ tín dụng': return 'P_HTTD';
     case 'Phòng KHDN': return 'P_KHDN';
     case 'Phòng Tổ chức Tổng hợp': return 'P_TCTH';
-    case 'Tổ Điện toán & Công nghệ thông tin': return 'P_IT';
+    case 'Điện toán & Công nghệ thông tin':
+    case 'Tổ Điện toán & Công nghệ thông tin':
+    case 'Điện toán': return 'P_IT';
     default: return 'P_NB';
   }
 };
@@ -413,7 +415,7 @@ export const initialCanBo: CanBo[] = [
     soDienThoai: '0901234567',
     vaiTro: 'Admin',
     maPhongBan: 'P_IT',
-    tenPhongBan: 'Tổ Điện toán & Công nghệ thông tin',
+    tenPhongBan: 'Điện toán & Công nghệ thông tin',
     chucVu: 'Quản trị viên',
     trangThai: 'Đang làm việc',
     hasAccount: true,
@@ -533,9 +535,9 @@ export const initialRequests: RequestRecord[] = [
     tenPhongBan: 'Phòng Dịch vụ khách hàng',
     maChuongTrinh: 'FAST_FUND',
     tenChuongTrinh: 'FastFund (Chuyển tiền liên ngân hàng/Napas)',
-    loaiDeNghi: 'Reset mật khẩu',
+    loaiDeNghi: 'Thay đổi',
     soQDTuyenDung_PhanCong: '88/TB-KTDV ngày 01/06/2026',
-    noiDung: 'Tài khoản FastFund bị khóa do nhập sai mật khẩu 3 lần liên tiếp trong ca làm việc',
+    noiDung: 'Tài khoản FastFund bị khóa hoặc cần thay đổi nhóm quyền giao dịch theo phân công mới',
     trangThai: 'Chờ lãnh đạo phòng phê duyệt'
   },
   {
@@ -677,7 +679,7 @@ export const initialEmails: EmailNotification[] = [
     id: 'mail-1',
     to: 'ducnt4@vietinbank.vn',
     subject: '[ĐỀ NGHỊ CẤP QUYỀN] CN-2026-0001 - Đã được phê duyệt',
-    body: `Kính gửi Cán bộ Điện toán,\n\nĐề nghị cấp quyền CN-2026-0001 đã được Lãnh đạo phòng phê duyệt và chuyển đến Tổ Điện toán để xử lý.\n\nThông tin chi tiết:\n- Mã đề nghị: CN-2026-0001\n- Họ tên cán bộ: Nguyễn Văn An\n- User AD: annv12 (Mã: AD_042_012)\n- Phòng ban: P001 - Phòng Khách hàng Doanh nghiệp\n- Chương trình: CoreBanking (Hệ thống Ngân hàng lõi)\n- Loại đề nghị: Cấp mới\n- Số QĐ/Phân công NV: 142/QĐ-NHCT.NB ngày 01/08/2026\n- Người phê duyệt: Phạm Đức Dũng (dungpd)\n- Thời gian phê duyệt: 10/08/2026 10:15\n\nTrân trọng thông báo.`,
+    body: `Kính gửi Cán bộ Điện toán,\n\nĐề nghị cấp quyền CN-2026-0001 đã được Lãnh đạo phòng phê duyệt và chuyển đến Điện toán để xử lý.\n\nThông tin chi tiết:\n- Mã đề nghị: CN-2026-0001\n- Họ tên cán bộ: Nguyễn Văn An\n- User AD: annv12 (Mã: AD_042_012)\n- Phòng ban: P001 - Phòng Khách hàng Doanh nghiệp\n- Chương trình: CoreBanking (Hệ thống Ngân hàng lõi)\n- Loại đề nghị: Cấp mới\n- Số QĐ/Phân công NV: 142/QĐ-NHCT.NB ngày 01/08/2026\n- Người phê duyệt: Phạm Đức Dũng (dungpd)\n- Thời gian phê duyệt: 10/08/2026 10:15\n\nTrân trọng thông báo.`,
     thoiGian: '10/08/2026 10:15',
     maDeNghi: 'CN-2026-0001',
     loai: 'Phê duyệt',
@@ -687,7 +689,7 @@ export const initialEmails: EmailNotification[] = [
     id: 'mail-2',
     to: 'ducnt4@vietinbank.vn',
     subject: '[ĐỀ NGHỊ CẤP QUYỀN] CN-2026-0003 - Đã được phê duyệt',
-    body: `Kính gửi Cán bộ Điện toán,\n\nĐề nghị cấp quyền CN-2026-0003 đã được Lãnh đạo phòng phê duyệt và chuyển đến Tổ Điện toán để xử lý.\n\nThông tin chi tiết:\n- Mã đề nghị: CN-2026-0003\n- Họ tên cán bộ: Trần Thị Bích\n- User AD: bichtt (Mã: AD_042_018)\n- Phòng ban: P002 - Phòng Bán lẻ & Khách hàng Cá nhân\n- Chương trình: LOS (Khởi tạo và phê duyệt khoản vay)\n- Loại đề nghị: Cấp mới\n- Số QĐ/Phân công NV: 155/QĐ-NHCT.NB ngày 10/08/2026\n- Người phê duyệt: Hoàng Minh Tuấn (tuanhm)\n- Thời gian phê duyệt: 15/08/2026 08:30\n\nTrân trọng thông báo.`,
+    body: `Kính gửi Cán bộ Điện toán,\n\nĐề nghị cấp quyền CN-2026-0003 đã được Lãnh đạo phòng phê duyệt và chuyển đến Điện toán để xử lý.\n\nThông tin chi tiết:\n- Mã đề nghị: CN-2026-0003\n- Họ tên cán bộ: Trần Thị Bích\n- User AD: bichtt (Mã: AD_042_018)\n- Phòng ban: P002 - Phòng Bán lẻ & Khách hàng Cá nhân\n- Chương trình: LOS (Khởi tạo và phê duyệt khoản vay)\n- Loại đề nghị: Cấp mới\n- Số QĐ/Phân công NV: 155/QĐ-NHCT.NB ngày 10/08/2026\n- Người phê duyệt: Hoàng Minh Tuấn (tuanhm)\n- Thời gian phê duyệt: 15/08/2026 08:30\n\nTrân trọng thông báo.`,
     thoiGian: '15/08/2026 08:30',
     maDeNghi: 'CN-2026-0003',
     loai: 'Phê duyệt',

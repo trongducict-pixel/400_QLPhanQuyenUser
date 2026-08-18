@@ -8,7 +8,7 @@ export function getFullGoogleAppsScriptCode(): string {
  * HỆ THỐNG QUẢN LÝ ĐỀ NGHỊ CẤP QUYỀN CÁC CHƯƠNG TRÌNH ỨNG DỤNG NỘI BỘ
  * ĐƠN VỊ: VIETINBANK – CHI NHÁNH NINH BÌNH (PHIÊN BẢN V1.2)
  * 
- * Tác giả: Tổ Điện toán & Công nghệ thông tin - VietinBank Chi nhánh Ninh Bình
+ * Tác giả: Điện toán & Công nghệ thông tin - VietinBank Chi nhánh Ninh Bình
  * Email tiếp nhận thông báo & hồ sơ scan: ducnt4@vietinbank.vn
  * ==========================================================================================
  */
@@ -294,11 +294,11 @@ function handleApproveRequest(currentUser, payload) {
     ]);
   }
 
-  // Gửi Email thông báo tới Tổ Điện toán
+  // Gửi Email thông báo tới Điện toán
   try {
     var emailSubject = "[ĐỀ NGHỊ CẤP QUYỀN] " + (payload.maDeNghi || payload.id) + " - Đã được phê duyệt";
     var emailBody = "Kính gửi Cán bộ Điện toán,\\n\\n" +
-      "Đề nghị cấp quyền " + (payload.maDeNghi || payload.id) + " đã được Lãnh đạo phòng phê duyệt và chuyển đến Tổ Điện toán.\\n\\n" +
+      "Đề nghị cấp quyền " + (payload.maDeNghi || payload.id) + " đã được Lãnh đạo phòng phê duyệt và chuyển đến Điện toán.\\n\\n" +
       "- Cán bộ: " + reqData[4] + " (User AD: " + reqData[5] + ")\\n" +
       "- Phòng ban: " + reqData[7] + "\\n" +
       "- Chương trình: " + reqData[9] + "\\n" +

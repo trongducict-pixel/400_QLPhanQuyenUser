@@ -136,7 +136,7 @@ class DatabaseState {
             maDeNghi: req.maDeNghi,
             ngayCapQuyen: req.ngayCapQuyen || req.thoiGianHoanThanh?.split(' ')[0] || ''
           };
-        } else if (req.loaiDeNghi === 'Reset mật khẩu') {
+        } else if (req.loaiDeNghi === 'Thay đổi' || (req.loaiDeNghi as string) === 'Reset mật khẩu') {
           // Keep existing status & original granted date if already V, or set V
           if (userPrograms[progCode].status !== 'V') {
             userPrograms[progCode].status = 'V';
@@ -228,7 +228,7 @@ async function startServer() {
 
     if (user.trangThai === 'Khóa') {
       db.logAudit(user.userAD, user.chucVu, 'ĐĂNG_NHẬP_KHÓA', undefined, 'Đăng nhập thất bại do tài khoản bị khóa', 'Cảnh báo');
-      return res.status(403).json({ success: false, message: 'Tài khoản đã bị KHÓA. Vui lòng liên hệ Quản trị viên/Tổ Điện toán.' });
+      return res.status(403).json({ success: false, message: 'Tài khoản đã bị KHÓA. Vui lòng liên hệ Quản trị viên/Điện toán.' });
     }
 
     // Default password check (allow 123456 or match)
@@ -422,7 +422,7 @@ async function startServer() {
 
     // Send notification email to ducnt4@vietinbank.vn
     const emailSubject = `[ĐỀ NGHỊ CẤP QUYỀN] ${request.maDeNghi} - Đã được phê duyệt`;
-    const emailBody = `Kính gửi Cán bộ Điện toán,\n\nĐề nghị cấp quyền ${request.maDeNghi} đã được Lãnh đạo phòng phê duyệt và chuyển đến Tổ Điện toán để xử lý.\n\nThông tin chi tiết:\n- Mã đề nghị: ${request.maDeNghi}\n- Họ tên cán bộ: ${request.hoTen}\n- User AD: ${request.userAD} (Mã: ${request.maUserAD})\n- Phòng ban: ${request.maPhongBan} - ${request.tenPhongBan}\n- Chương trình: ${request.tenChuongTrinh}\n- Loại đề nghị: ${request.loaiDeNghi}\n- Số QĐ/Phân công NV: ${request.soQDTuyenDung_PhanCong}\n- Người phê duyệt: ${currentUser.hoTen} (${currentUser.userAD})\n- Thời gian phê duyệt: ${thoiGianDuyet}\n\nTrân trọng thông báo.`;
+    const emailBody = `Kính gửi Cán bộ Điện toán,\n\nĐề nghị cấp quyền ${request.maDeNghi} đã được Lãnh đạo phòng phê duyệt và chuyển đến Điện toán để xử lý.\n\nThông tin chi tiết:\n- Mã đề nghị: ${request.maDeNghi}\n- Họ tên cán bộ: ${request.hoTen}\n- User AD: ${request.userAD} (Mã: ${request.maUserAD})\n- Phòng ban: ${request.maPhongBan} - ${request.tenPhongBan}\n- Chương trình: ${request.tenChuongTrinh}\n- Loại đề nghị: ${request.loaiDeNghi}\n- Số QĐ/Phân công NV: ${request.soQDTuyenDung_PhanCong}\n- Người phê duyệt: ${currentUser.hoTen} (${currentUser.userAD})\n- Thời gian phê duyệt: ${thoiGianDuyet}\n\nTrân trọng thông báo.`;
 
     db.emails.unshift({
       id: `mail-${Date.now()}`,

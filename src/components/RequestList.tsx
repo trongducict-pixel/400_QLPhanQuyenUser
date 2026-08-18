@@ -50,6 +50,7 @@ export const RequestList: React.FC<RequestListProps> = ({
   onOpenPrint
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [scopeFilter, setScopeFilter] = useState<'ALL' | 'MINE' | 'DEPT'>('ALL');
   const [selectedStatus, setSelectedStatus] = useState<string>('ALL');
   const [selectedType, setSelectedType] = useState<string>('ALL');
   const [selectedProg, setSelectedProg] = useState<string>('ALL');
@@ -64,6 +65,17 @@ export const RequestList: React.FC<RequestListProps> = ({
   // Filter requests
   const filtered = useMemo(() => {
     return requests.filter((r) => {
+      // Scope filter
+      if (scopeFilter === 'MINE') {
+        if (r.userAD !== currentUser.userAD && r.maUserAD !== currentUser.maUserAD) {
+          return false;
+        }
+      } else if (scopeFilter === 'DEPT') {
+        if (r.maPhongBan !== currentUser.maPhongBan) {
+          return false;
+        }
+      }
+
       // Search term
       if (searchTerm.trim()) {
         const term = searchTerm.toLowerCase();
@@ -100,7 +112,7 @@ export const RequestList: React.FC<RequestListProps> = ({
 
       return true;
     });
-  }, [requests, searchTerm, selectedStatus, selectedType, selectedProg, selectedDept]);
+  }, [requests, scopeFilter, currentUser, searchTerm, selectedStatus, selectedType, selectedProg, selectedDept]);
 
   // Pagination
   const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
@@ -150,18 +162,32 @@ export const RequestList: React.FC<RequestListProps> = ({
             Cấp mới
           </span>
         );
-      case 'Reset mật khẩu':
+      case 'Thay đổi':
         return (
           <span className="bg-blue-50 text-blue-700 border border-blue-200 text-[10px] font-bold px-1.5 py-0.5 rounded">
-            Reset mật khẩu
+            Thay đổi
           </span>
         );
       case 'Hủy người dùng':
         return (
           <span className="bg-rose-50 text-rose-700 border border-rose-200 text-[10px] font-bold px-1.5 py-0.5 rounded">
-            Hủy quyền
+            Hủy người dùng
           </span>
         );
+    }
+  };
+
+  const getTitle = () => {
+    switch (role) {
+      case 'Cán bộ':
+        return 'Quản lý đề nghị của tôi';
+      case 'Lãnh đạo phòng':
+        return 'Quản lý & Phê duyệt đề nghị phòng ban';
+      case 'Cán bộ điện toán':
+        return 'Quản lý đề nghị cấp quyền (Điện toán)';
+      case 'Admin':
+      default:
+        return 'Quản lý đề nghị cấp quyền toàn hệ thống';
     }
   };
 
@@ -171,34 +197,78 @@ export const RequestList: React.FC<RequestListProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
         <div>
           <h2 className="text-base sm:text-lg font-bold text-gray-900 flex items-center gap-2">
-            <span>Danh sách đề nghị cấp quyền</span>
-            <span className="text-xs bg-slate-100 text-slate-700 font-semibold px-2 py-0.5 rounded-full border">
+            <span>{getTitle()}</span>
+            <span className="text-xs bg-slate-100 text-[#0054A3] font-bold px-2 py-0.5 rounded-full border border-blue-200">
               {filtered.length} bản ghi
             </span>
           </h2>
           <p className="text-xs text-gray-500 mt-0.5">
-            {role === 'Cán bộ' && 'Theo dõi trạng thái các đề nghị cấp quyền bạn đã gửi.'}
+            {role === 'Cán bộ' && 'Theo dõi tiến trình, tra cứu đề nghị của tất cả cán bộ trên toàn chi nhánh và in phiếu A4.'}
             {role === 'Lãnh đạo phòng' &&
-              `Chỉ hiển thị và phê duyệt đề nghị của cán bộ thuộc ${currentUser.tenPhongBan} (${currentUser.maPhongBan}).`}
+              `Phê duyệt các đề nghị của cán bộ thuộc ${currentUser.tenPhongBan} (${currentUser.maPhongBan}) và tra cứu toàn bộ đề nghị chi nhánh.`}
             {role === 'Cán bộ điện toán' &&
-              'Danh sách toàn bộ đề nghị cấp quyền, tiếp nhận và hoàn thành trên hệ thống nội bộ.'}
-            {role === 'Admin' && 'Quản trị và giám sát toàn bộ quy trình cấp quyền.'}
+              'Danh sách toàn bộ đề nghị cấp quyền chi nhánh Ninh Bình, tiếp nhận xử lý và hoàn thành trên hệ thống nội bộ.'}
+            {role === 'Admin' && 'Quản trị và giám sát toàn bộ quy trình cấp quyền trên toàn hệ thống.'}
           </p>
         </div>
 
-        {(role === 'Cán bộ' || role === 'Admin') && (
-          <button
-            onClick={onOpenCreate}
-            className="inline-flex items-center gap-2 bg-[#004F9E] hover:bg-[#003B77] text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow transition self-start sm:self-auto"
-          >
-            <FilePlus className="w-4 h-4" />
-            <span>Lập đề nghị mới</span>
-          </button>
-        )}
+        <button
+          onClick={onOpenCreate}
+          className="inline-flex items-center gap-2 bg-[#DE1C24] hover:bg-red-700 text-white text-xs font-bold px-4 py-2.5 rounded-lg shadow-sm transition self-start sm:self-auto cursor-pointer"
+        >
+          <FilePlus className="w-4 h-4" />
+          <span>Lập đề nghị mới</span>
+        </button>
       </div>
 
       {/* Filter Bar */}
       <div className="bg-white p-3.5 rounded-xl border border-gray-200 shadow-sm space-y-3">
+        {/* Scope Selector Tabs */}
+        <div className="flex flex-wrap items-center gap-2 pb-2.5 border-b border-gray-100 text-xs">
+          <span className="text-gray-500 font-semibold text-[11px] uppercase tracking-wider mr-1">
+            Phạm vi hiển thị:
+          </span>
+          <button
+            onClick={() => {
+              setScopeFilter('ALL');
+              setCurrentPage(1);
+            }}
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
+              scopeFilter === 'ALL'
+                ? 'bg-[#0054A3] text-white shadow-xs'
+                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+            }`}
+          >
+            Tất cả đề nghị Chi nhánh ({requests.length})
+          </button>
+          <button
+            onClick={() => {
+              setScopeFilter('DEPT');
+              setCurrentPage(1);
+            }}
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
+              scopeFilter === 'DEPT'
+                ? 'bg-[#0054A3] text-white shadow-xs'
+                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+            }`}
+          >
+            Phòng ban của tôi ({requests.filter((r) => r.maPhongBan === currentUser.maPhongBan).length})
+          </button>
+          <button
+            onClick={() => {
+              setScopeFilter('MINE');
+              setCurrentPage(1);
+            }}
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
+              scopeFilter === 'MINE'
+                ? 'bg-[#0054A3] text-white shadow-xs'
+                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+            }`}
+          >
+            Đề nghị của tôi ({requests.filter((r) => r.userAD === currentUser.userAD || r.maUserAD === currentUser.maUserAD).length})
+          </button>
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2.5">
           {/* Search Box */}
           <div className="md:col-span-2 relative">
@@ -245,7 +315,7 @@ export const RequestList: React.FC<RequestListProps> = ({
             >
               <option value="ALL">-- Loại đề nghị --</option>
               <option value="Cấp mới">Cấp mới</option>
-              <option value="Reset mật khẩu">Reset mật khẩu</option>
+              <option value="Thay đổi">Thay đổi</option>
               <option value="Hủy người dùng">Hủy người dùng</option>
             </select>
           </div>
@@ -270,48 +340,46 @@ export const RequestList: React.FC<RequestListProps> = ({
           </div>
         </div>
 
-        {/* Extra Department Filter for IT / Admin */}
-        {(role === 'Cán bộ điện toán' || role === 'Admin') && (
-          <div className="flex items-center space-x-2 pt-2 border-t border-gray-100 text-xs">
-            <span className="text-gray-500 font-semibold flex items-center gap-1">
-              <Building className="w-3.5 h-3.5" />
-              Lọc theo phòng ban:
-            </span>
-            <div className="flex flex-wrap gap-1.5">
-              <button
-                onClick={() => {
-                  setSelectedDept('ALL');
-                  setCurrentPage(1);
-                }}
-                className={`px-2 py-0.5 rounded text-[11px] font-medium transition ${
-                  selectedDept === 'ALL'
-                    ? 'bg-[#004F9E] text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                Tất cả phòng
-              </button>
-              {departments
-                .filter((d) => d.trangThai === 'Hoạt động')
-                .map((d) => (
-                  <button
-                    key={d.id}
-                    onClick={() => {
-                      setSelectedDept(d.maPhongBan);
-                      setCurrentPage(1);
-                    }}
-                    className={`px-2 py-0.5 rounded text-[11px] font-medium transition ${
-                      selectedDept === d.maPhongBan
-                        ? 'bg-[#004F9E] text-white font-bold'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
-                  >
-                    {d.maPhongBan}
-                  </button>
-                ))}
-            </div>
+        {/* Extra Department Filter for all users */}
+        <div className="flex items-center space-x-2 pt-2 border-t border-gray-100 text-xs">
+          <span className="text-gray-500 font-semibold flex items-center gap-1">
+            <Building className="w-3.5 h-3.5" />
+            Lọc theo phòng ban:
+          </span>
+          <div className="flex flex-wrap gap-1.5">
+            <button
+              onClick={() => {
+                setSelectedDept('ALL');
+                setCurrentPage(1);
+              }}
+              className={`px-2 py-0.5 rounded text-[11px] font-medium transition cursor-pointer ${
+                selectedDept === 'ALL'
+                  ? 'bg-[#004F9E] text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              Tất cả phòng
+            </button>
+            {departments
+              .filter((d) => d.trangThai === 'Hoạt động')
+              .map((d) => (
+                <button
+                  key={d.id}
+                  onClick={() => {
+                    setSelectedDept(d.maPhongBan);
+                    setCurrentPage(1);
+                  }}
+                  className={`px-2 py-0.5 rounded text-[11px] font-medium transition cursor-pointer ${
+                    selectedDept === d.maPhongBan
+                      ? 'bg-[#004F9E] text-white font-bold'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  {d.maPhongBan}
+                </button>
+              ))}
           </div>
-        )}
+        </div>
       </div>
 
       {/* Main Table */}

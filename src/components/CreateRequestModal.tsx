@@ -178,7 +178,7 @@ export const CreateRequestModal: React.FC<CreateRequestModalProps> = ({
                 Loại đề nghị <span className="text-red-500">*</span>
               </label>
               <div className="grid grid-cols-3 gap-2">
-                {(['Cấp mới', 'Reset mật khẩu', 'Hủy người dùng'] as RequestType[]).map((type) => (
+                {(['Cấp mới', 'Thay đổi', 'Hủy người dùng'] as RequestType[]).map((type) => (
                   <label
                     key={type}
                     className={`flex items-center justify-center p-2.5 rounded-xl border cursor-pointer font-bold transition text-xs ${

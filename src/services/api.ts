@@ -579,7 +579,7 @@ class ClientStore {
             maDeNghi: req.maDeNghi,
             ngayCapQuyen: req.ngayCapQuyen || req.thoiGianHoanThanh?.split(' ')[0] || ''
           };
-        } else if (req.loaiDeNghi === 'Reset mật khẩu') {
+        } else if (req.loaiDeNghi === 'Thay đổi' || (req.loaiDeNghi as string) === 'Reset mật khẩu') {
           if (userPrograms[progCode].status !== 'V') userPrograms[progCode].status = 'V';
           if (!userPrograms[progCode].maDeNghi) {
             userPrograms[progCode].maDeNghi = req.maDeNghi;
@@ -888,7 +888,7 @@ export const api = {
             u.maUserAD.toLowerCase() === cleanAD
         );
         if (!found) throw new Error('Tài khoản User AD không tồn tại trong hệ thống');
-        if (found.trangThai === 'Khóa') throw new Error('Tài khoản đã bị KHÓA. Vui lòng liên hệ Quản trị viên/Tổ Điện toán');
+        if (found.trangThai === 'Khóa') throw new Error('Tài khoản đã bị KHÓA. Vui lòng liên hệ Quản trị viên/Điện toán');
         
         const expectedPass = found.matKhau || '123456';
         if (matKhau && matKhau !== expectedPass && matKhau !== '123456') {

@@ -92,7 +92,7 @@ export const PrintTicketModal: React.FC<PrintTicketModalProps> = ({
               PHIẾU ĐỀ NGHỊ CẤP QUYỀN TRUY CẬP CHƯƠNG TRÌNH
             </h1>
             <p className="text-xs italic text-gray-700 mt-1">
-              (Kính gửi: Lãnh đạo Phòng & Tổ Điện toán – VietinBank Chi nhánh Ninh Bình)
+              (Kính gửi: Lãnh đạo Phòng & Điện toán – VietinBank Chi nhánh Ninh Bình)
             </p>
           </div>
 
@@ -276,7 +276,7 @@ export const PrintTicketModal: React.FC<PrintTicketModalProps> = ({
             </div>
 
             <div>
-              <div className="font-bold uppercase">TỔ ĐIỆN TOÁN & CNTT</div>
+              <div className="font-bold uppercase">ĐIỆN TOÁN & CNTT</div>
               <div className="text-[10px] text-gray-500 italic">(Ký, ghi rõ họ tên)</div>
               <div className="h-20 flex items-end justify-center font-bold">
                 {request.nguoiXuLy?.split('(')[0] || 'Nguyễn Trọng Đức'}

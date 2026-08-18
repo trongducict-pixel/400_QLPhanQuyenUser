@@ -263,7 +263,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                   <span>Quy định An toàn Thông tin VietinBank:</span>
                 </div>
                 <p className="text-slate-700 leading-relaxed">
-                  Việc cấp mới hoặc đặt lại (reset) mật khẩu tài khoản User AD được quản lý và thực hiện bởi <strong>Tổ Điện toán</strong> & Quản trị hệ thống của Chi nhánh Ninh Bình.
+                  Việc cấp mới hoặc đặt lại (reset) mật khẩu tài khoản User AD được quản lý và thực hiện bởi <strong>Điện toán</strong> & Quản trị hệ thống của Chi nhánh Ninh Bình.
                 </p>
               </div>
 
@@ -272,7 +272,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                 <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-slate-900">Nguyễn Trọng Đức</span>
-                    <span className="text-[10px] bg-blue-100 text-[#004F9E] font-bold px-2 py-0.5 rounded">Tổ Điện toán</span>
+                    <span className="text-[10px] bg-blue-100 text-[#004F9E] font-bold px-2 py-0.5 rounded">Điện toán</span>
                   </div>
                   <div className="space-y-1 text-slate-600 text-[11px]">
                     <div className="flex items-center gap-2">
