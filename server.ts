@@ -1321,7 +1321,7 @@ async function startServer() {
       id: `cb-${Date.now()}`,
       maCanBo: maCanBo.trim().toUpperCase(),
       hoTen: hoTen.trim(),
-      maUserAD: maUserAD ? maUserAD.trim() : (cleanUserAD ? `AD_042_${String(db.users.length + 1).padStart(3, '0')}` : ''),
+      maUserAD: maUserAD ? maUserAD.trim() : (cleanUserAD ? String(db.users.length + 1).padStart(8, '0') : ''),
       userAD: cleanUserAD,
       matKhau: cleanMatKhau,
       email: email || (cleanUserAD ? `${cleanUserAD}@vietinbank.vn` : ''),
@@ -1343,7 +1343,7 @@ async function startServer() {
       if (!existingUser) {
         existingUser = {
           id: `user-${Date.now()}`,
-          maUserAD: newStaff.maUserAD || `AD_042_${String(db.users.length + 1).padStart(3, '0')}`,
+          maUserAD: newStaff.maUserAD || String(db.users.length + 1).padStart(8, '0'),
           hoTen: newStaff.hoTen,
           userAD: cleanUserAD,
           maPhongBan: newStaff.maPhongBan,
@@ -1414,7 +1414,7 @@ async function startServer() {
         if (!user) {
           user = {
             id: `user-${Date.now()}`,
-            maUserAD: staffMember.maUserAD || `AD_042_${String(db.users.length + 1).padStart(3, '0')}`,
+            maUserAD: staffMember.maUserAD || String(db.users.length + 1).padStart(8, '0'),
             hoTen: staffMember.hoTen,
             userAD: cleanUserAD,
             maPhongBan: staffMember.maPhongBan,
@@ -1472,7 +1472,7 @@ async function startServer() {
       // Create user if not existed yet
       db.users.push({
         id: `user-${Date.now()}`,
-        maUserAD: staffMember.maUserAD || `AD_042_${String(db.users.length + 1).padStart(3, '0')}`,
+        maUserAD: staffMember.maUserAD || String(db.users.length + 1).padStart(8, '0'),
         hoTen: staffMember.hoTen,
         userAD: staffMember.userAD.toLowerCase(),
         maPhongBan: staffMember.maPhongBan,
@@ -1529,7 +1529,7 @@ async function startServer() {
     const finalMatKhau = matKhau && matKhau.trim() ? matKhau.trim() : '123456';
     const finalVaiTro = vaiTro || 'Cán bộ';
     const finalEmail = email || `${cleanUserAD}@vietinbank.vn`;
-    const finalMaUserAD = maUserAD || staffMember.maUserAD || `AD_042_${String(db.users.length + 1).padStart(3, '0')}`;
+    const finalMaUserAD = maUserAD || staffMember.maUserAD || String(db.users.length + 1).padStart(8, '0');
 
     const now = new Date();
     const formattedDate = `${now.getDate().toString().padStart(2, '0')}/${(now.getMonth() + 1).toString().padStart(2, '0')}/${now.getFullYear()}`;

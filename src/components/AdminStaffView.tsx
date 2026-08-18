@@ -194,16 +194,17 @@ export const AdminStaffView: React.FC<AdminStaffViewProps> = ({
   const handleOpenAdd = () => {
     setEditingStaff(null);
     const nextSeq = staffList.length + 1;
-    setMaCanBo(`CB${String(nextSeq).padStart(3, '0')}`);
+    const eightDigitCode = String(nextSeq).padStart(8, '0');
+    setMaCanBo(eightDigitCode);
     setHoTen('');
     setUserAD('');
-    setMaUserAD(`AD_042_${String(nextSeq).padStart(3, '0')}`);
+    setMaUserAD(eightDigitCode);
     setMatKhau('123456');
     setEmail('');
     setSoDienThoai('');
     setVaiTro('Cán bộ');
-    setMaPhongBan(departments[0]?.maPhongBan || 'P001');
-    setChucVu('Giao dịch viên');
+    setMaPhongBan(departments[0]?.maPhongBan || 'P_KHDN');
+    setChucVu('Nhân viên');
     setTrangThai('Đang làm việc');
     setHasAccountCheckbox(true);
     setError('');
@@ -287,8 +288,9 @@ export const AdminStaffView: React.FC<AdminStaffViewProps> = ({
   const handleOpenProvision = (staff: CanBo) => {
     setProvisionStaff(staff);
     const suggestedAD = generateUserADFromName(staff.hoTen);
+    const eightDigitCode = (staff.maCanBo || String(staffList.length + 1)).padStart(8, '0');
     setProvUserAD(suggestedAD);
-    setProvMaUserAD(staff.maUserAD || `AD_042_${String(staffList.length + 1).padStart(3, '0')}`);
+    setProvMaUserAD(staff.maUserAD || eightDigitCode);
     setProvMatKhau('123456');
     setProvEmail(staff.email || (suggestedAD ? `${suggestedAD}@vietinbank.vn` : ''));
     setProvVaiTro(staff.vaiTro || 'Cán bộ');
@@ -445,6 +447,26 @@ export const AdminStaffView: React.FC<AdminStaffViewProps> = ({
           <div className="w-11 h-11 rounded-xl bg-blue-50 text-[#004F9E] flex items-center justify-center font-bold">
             <Shield className="w-6 h-6" />
           </div>
+        </div>
+      </div>
+
+      {/* Guide Banner for Editing Staff Information */}
+      <div className="p-3.5 bg-gradient-to-r from-blue-50 via-sky-50 to-indigo-50 border border-blue-200 rounded-2xl flex items-start gap-3 shadow-xs">
+        <div className="p-2 bg-[#004F9E] text-white rounded-xl flex-shrink-0 mt-0.5">
+          <Edit2 className="w-4 h-4" />
+        </div>
+        <div className="text-xs text-slate-700 space-y-1">
+          <div className="font-bold text-[#004F9E] flex items-center gap-2">
+            <span>Cách chỉnh sửa thông tin Cán bộ:</span>
+            <span className="text-[10px] bg-blue-100 text-[#004F9E] font-bold px-2 py-0.5 rounded border border-blue-200">
+              Mã User AD định dạng 8 ký tự số (VD: 00005568, 00006961)
+            </span>
+          </div>
+          <p className="text-[11.5px] leading-relaxed text-slate-600">
+            • Nhấn vào nút <strong>"Sửa" (biểu tượng ✏️ bút chì)</strong> tại cột <strong>Thao tác</strong> của cán bộ bất kỳ để chỉnh sửa: <strong>Phòng ban</strong>, <strong>Số điện thoại</strong>, <strong>Tài khoản User AD</strong>, <strong>Mã User AD (8 số)</strong>, <strong>Chức danh</strong>, <strong>Mật khẩu</strong> và <strong>Vai trò hệ thống</strong>.
+            <br />
+            • Sau khi lưu, thông tin sẽ được tự động cập nhật đồng bộ sang bảng USERS và Google Sheets liên tục.
+          </p>
         </div>
       </div>
 
@@ -877,12 +899,13 @@ export const AdminStaffView: React.FC<AdminStaffViewProps> = ({
                         />
                       </div>
                       <div>
-                        <label className="block text-gray-700 font-bold mb-1">Mã User AD:</label>
+                        <label className="block text-gray-700 font-bold mb-1">Mã User AD (8 số):</label>
                         <input
                           type="text"
                           value={maUserAD}
                           onChange={(e) => setMaUserAD(e.target.value)}
-                          placeholder="VD: AD_042_010"
+                          placeholder="VD: 00005568, 00006961"
+                          maxLength={8}
                           className="w-full p-2 border border-gray-300 rounded-lg font-mono bg-white"
                         />
                       </div>
@@ -988,11 +1011,13 @@ export const AdminStaffView: React.FC<AdminStaffViewProps> = ({
 
               <div className="grid grid-cols-2 gap-2.5">
                 <div>
-                  <label className="block text-gray-700 font-bold mb-1">Mã User AD:</label>
+                  <label className="block text-gray-700 font-bold mb-1">Mã User AD (8 số):</label>
                   <input
                     type="text"
                     value={provMaUserAD}
                     onChange={(e) => setProvMaUserAD(e.target.value)}
+                    placeholder="VD: 00005568, 00006961"
+                    maxLength={8}
                     className="w-full p-2 border border-gray-300 rounded-lg font-mono bg-white"
                   />
                 </div>
